@@ -1,0 +1,6 @@
+fastapi[all]
+onnx
+onnxruntime
+mlflow
+prometheus-fastapi-instrumentator
+requests

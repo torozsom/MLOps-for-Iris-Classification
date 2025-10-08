@@ -1,0 +1,22 @@
+[project]
+name = "mlops-for-iris-classification"
+version = "0.1.0"
+description = "This is a sample MLOps project for Iris classification using DVC, Prefect, and FastAPI."
+authors = [
+    {name = "Toronyi Zsombor",email = "toronyi.zsombor.dev@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = ["dvc (>=3.63.0,<4.0.0)", "pandas (>=2.3.3,<3.0.0)", "scikit-learn (>=1.7.2,<2.0.0)", "matplotlib (>=3.10.6,<4.0.0)", "skl2onnx (>=1.19.1,<2.0.0)", "mlflow (>=3.4.0,<4.0.0)", "onnx (>=1.19.0,<2.0.0)", "onnxruntime (>=1.23.0,<2.0.0)", "fastapi[all] (>=0.118.0,<0.119.0)", "prometheus-fastapi-instrumentator (>=7.1.0,<8.0.0)", "prefect-client (>=3.4.22,<4.0.0)", "prefect (>=3.4.22,<4.0.0)"]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = false
+
+[tool.poetry.requires-plugins]
+poetry-plugin-export = ">=1.8"
+

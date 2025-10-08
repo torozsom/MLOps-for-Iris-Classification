@@ -1,0 +1,10 @@
+prefect
+prefect-client
+mlflow
+scikit-learn
+pandas
+numpy
+onnx
+onnxruntime
+skl2onnx
+matplotlib

@@ -1,0 +1,71 @@
+services:
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v3.3.2
+    volumes:
+      - mlflow_mlruns:/mlruns
+      - mlflow_mlartifacts:/mlartifacts
+    ports:
+      - '5000:5000'
+    entrypoint: mlflow ui --host 0.0.0.0
+
+  api:
+    image:
+      api
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    ports:
+      - "80:80"
+    environment:
+      MLFLOW_URI: "http://mlflow:5000"
+      PREFECT_API_URL: "http://prefect:4200/api"
+    depends_on:
+      - mlflow
+      - prefect
+
+  prefect:
+    image: prefecthq/prefect:3-latest
+    command: [ "prefect", "server", "start", "--host", "0.0.0.0" ]
+    ports:
+      - "4200:4200"
+    environment:
+      PREFECT_API_URL: "http://localhost:4200/api"
+
+  finetune:
+    image:
+      finetune
+    build:
+      context: .
+      dockerfile: finetune/Dockerfile
+    environment:
+      PREFECT_API_URL: "http://prefect:4200/api"
+      MLFLOW_URL: "http://mlflow:5000"
+    volumes:
+      - ./data:/code/data
+    depends_on:
+      - mlflow
+      - prefect
+
+volumes:
+  grafana_data:
+  mlflow_mlruns:
+  mlflow_mlartifacts:
+
