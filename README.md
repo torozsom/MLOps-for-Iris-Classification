@@ -1,4 +1,8 @@
-# MLOps for Iris classification
+# MLOps for Iris Classification
+
+---
+
+<img src="assets/MLOpsSystemArchitecture.png" width=100% />
 
 ---
 
